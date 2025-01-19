@@ -1,0 +1,8 @@
+django
+openai
+faiss-cpu
+pdfplumber
+python-docx
+django-cors-headers
+drf-yasg
+python-dotenv
