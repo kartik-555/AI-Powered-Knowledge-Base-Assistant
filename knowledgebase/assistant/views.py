@@ -5,7 +5,7 @@ from rest_framework import parsers, renderers, serializers, status
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .serializers import QuerySerializer, FileUploadSerializer
-from .utils import generate_answer_from_openai, retrieve_context, save_file
+from .utils import generate_answer_from_openai, retrieve_context, save_file, generate_answer_from_llama
 from rest_framework.permissions import AllowAny
 from rest_framework.generics import GenericAPIView
 
@@ -18,7 +18,8 @@ class QueryView(APIView):
         if serializer.is_valid():
             query = serializer.validated_data.get('query')
             context = retrieve_context(query) 
-            answer = generate_answer_from_openai(query, context)
+            answer = generate_answer_from_llama(query, context)
+            # answer = generate_answer_from_openai(query, context)
             return Response({"answer": answer}, status=status.HTTP_200_OK)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
